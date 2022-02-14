@@ -1,0 +1,7 @@
+node_modules
+*.boc
+*.pk
+address.txt
+fift
+func
+lite-client

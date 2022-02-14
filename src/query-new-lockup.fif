@@ -1,0 +1,32 @@
+#!/usr/bin/env fift -s
+"TonUtil.fif" include
+"Asm.fif" include
+
+{ ."usage: " @' $0 type ." <lock_time_seconds> <is_restirected_lockup> <private-key-file>" cr
+  ."Creates a lockup message " cr 1 halt
+} : usage
+$# 2- -2 and ' usage if
+
+$1 parse-int =: locked_time_sec
+$2 parse-int =: is_restirected
+$3 =: private-key-file
+
+private-key-file +".pk" load-keypair nip constant wallet_pk
+
+now locked_time_sec +  =: lock_timestamp
+now locked_time_sec + 
+."funds are locked till "  dup ."|" cr
+
+// op:rwallet_op(), Sign  , restricted_transfer, is_restirected, locking_ts 
+<b 0x373aa9f4 32 u, is_restirected 1 u, lock_timestamp 32 u, b> 
+
+dup ."signing message: " <s csr. cr
+dup hashu wallet_pk ed25519_sign_uint
+// op:rwallet_op(), Signature  , restricted_transfer, is_restirected, locking_ts 
+<b 0x82eaf9c4 32 u, swap B, 0x373aa9f4 32 u, is_restirected 1 u, lock_timestamp 32 u, b>  
+dup ."resulting external message: " <s csr. cr
+
+dup <s csr.
+dup 2 boc+>B
+"restricted_transfer.boc" tuck B>file
+."(Saved query to file " type .")" cr
