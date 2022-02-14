@@ -39,7 +39,8 @@ official frontend for creating the locking up transaction  [repository](https://
 - [ ] Or the better scenario is to to export the 24 words mnemonic to pk file, and deploy the lockup contract with the mnemonic base private key. after that modify ton web wallet target address (localstorage change) , and everything should work [ton-crypto](https://github.com/tonwhales/ton-crypto/blob/59b8b9b1a1bce1407c55a38a39115ed7aaaf333b/src/index.ts).
 
 
-# get balance at , so we can check in each timestamp the funds status , unlocked, locked, and restricted 
+### get balance at 
+using `runmethod get_balance_at` we can check in each future timestamp the funds status of unlocked, locked, and restricted funds.
 
 lite-client -C global.config.json -c 'runmethod <> get_balances_at <unix_timestamp>' -> result [ <unlocked>, <restricted>, <locked>]
 
