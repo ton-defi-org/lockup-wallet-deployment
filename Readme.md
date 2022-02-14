@@ -43,7 +43,7 @@ owner.pk wallet should withdraw the remaining balance
 ### get_balance_at 
 using `runmethod get_balance_at` we can check in each future timestamp the funds status of unlocked, locked, and restricted funds.
 
-lite-client -C global.config.json -c 'runmethod <> get_balances_at <unix_timestamp>' -> result [ <unlocked>, <restricted>, <locked>]
+lite-client -C global.config.json -c 'runmethod <> get_balances_at <unix_timestamp>' -> result [ $unlocked, $restricted, $locked]
 
 ### withdraw money from wallet
 
